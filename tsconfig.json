@@ -9,6 +9,7 @@
     "target": "es2015",
     "strict": true,
     "outDir": "./lib",
+    "skipLibCheck": true,
     "preserveConstEnums": true,
     "removeComments": true,
     "inlineSourceMap": false,

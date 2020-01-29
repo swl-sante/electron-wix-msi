@@ -1,6 +1,9 @@
 node_modules
 lib
 coverage
-harness/app/*
-harness/out/*
+harness/**/*
+harness/*
+!harness/harness.ts
+!harness/README.md
+
 .DS_Store
