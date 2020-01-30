@@ -10,17 +10,17 @@ Pour installer le package suivez la [documentation sur Github](https://help.gith
 
 ## Arguments
 
-| /                     | --platform                 | --ext                     | --dist              | --arch                             |
-|-----------------------|----------------------------|---------------------------|---------------------|----------------------------------|
-| **Valeurs possibles** | "win32", "darwin"          | "msi", "exe", "all"       | "machine", "user"   | "x32" "x64"                      |
-| **description**       | Type d'os Windows ou MacOSX| Extension de l'installeur | mode d'installation | architecture de l'OS Facultatif) |
+| /                     | --platform                  | --ext                     | --dist              | --arch                           |
+|-----------------------|-----------------------------|---------------------------|---------------------|----------------------------------|
+| **Valeurs possibles** | "win32", "darwin"           | "msi", "exe", "all"       | "machine", "user"   | "x32" "x64"                      |
+| **description**       | Type d'os Windows ou MacOSX | Extension de l'installeur | mode d'installation | architecture de l'OS Facultatif) |
 
 ### ext
 
 * `"msi"` = création d'un installeur MSI (installation avec UI : choix du dossier d'installation)
 * `"exe"` = création d'un installeur EXE (installation automatique)
 
-### dist 
+### dist
 
 * `"machine"` = installation sur tout le poste
 * `"user"` = installation propre à l'utilisateur
