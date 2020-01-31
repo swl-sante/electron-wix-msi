@@ -52,7 +52,6 @@ export async function main(args: Arguments) {
 
 	if (equivalentDist.get(args.ext) as number % 3 === 0) { // msi ou all
 		const tempFolder = path.join("temp");
-		console.log(packageJSON.build.directories.app);
 		create.push(createMSI(
 			{
 				asar: packageJSON.build.asar,
