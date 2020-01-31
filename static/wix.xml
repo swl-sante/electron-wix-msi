@@ -12,7 +12,7 @@
     <!-- http://wixtoolset.org/documentation/manual/v3/xsd/wix/package.html -->
     <Package InstallerVersion="405"
              Compressed="yes"
-             InstallScope="perMachine"
+             InstallScope="{{InstallScope}}"
              Comments="Windows Installer Package"
              Platform="{{Platform}}"/>
 
