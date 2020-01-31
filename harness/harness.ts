@@ -7,14 +7,13 @@ const parser = new ArgumentParser();
 
 parser.addArgument("--platform", { required: true, choices: ["win32", "darwin"] });
 parser.addArgument("--ext", { required: false, choices: ["msi", "exe", "all"], defaultValue: "all" });
-parser.addArgument("--dist", { required: false, choices: ["machine", "user"], help: "if not filled, use 'package.json'.build.nsis.perMachine value" });
+parser.addArgument("--dist", { required: false, choices: ["machine", "user", "all"], help: "if not filled, use 'package.json'.build.nsis.perMachine value" });
 parser.addArgument("--arch", { required: false });
-
 const args = parser.parseArgs();
 const packageJSON = JSON.parse(readFileSync(path.join(__dirname, "./package.json")).toString());
 
 async function main() {
-	const equivalent = new Map([["exe", 2], ["msi", 3], ["all", 6]]);
+	const equivalentDist = new Map([["exe", 2], ["msi", 3], ["all", 6]]);
 	const create: Promise<any>[] = [];
 	let installScope: "perMachine" | "perUser";
 
@@ -31,7 +30,7 @@ async function main() {
 	}
 
 
-	if (equivalent.get(args.ext) as number % 2 === 0) { // exe ou all
+	if (equivalentDist.get(args.ext) as number % 2 === 0) { // exe ou all
 		create.push(createEXE({
 			config: {
 				...packageJSON.build,
@@ -47,7 +46,7 @@ async function main() {
 		}));
 	}
 
-	if (equivalent.get(args.ext) as number % 3 === 0) { // msi ou all
+	if (equivalentDist.get(args.ext) as number % 3 === 0) { // msi ou all
 		const tempFolder = path.join("temp");
 		console.log(packageJSON.build.directories.app);
 		create.push(createMSI(
@@ -71,7 +70,8 @@ async function main() {
 				installScope,
 				ui: {
 					chooseDirectory: true
-				}
+				},
+				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced"
 			},
 			true
 		));
