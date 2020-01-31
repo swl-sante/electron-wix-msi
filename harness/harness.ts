@@ -3,16 +3,21 @@ import { readFileSync } from "fs";
 import * as path from "path";
 import { createEXE, createMSI } from "../src/index";
 
-const parser = new ArgumentParser();
 
-parser.addArgument("--platform", { required: true, choices: ["win32", "darwin"] });
-parser.addArgument("--ext", { required: false, choices: ["msi", "exe", "all"], defaultValue: "all" });
-parser.addArgument("--dist", { required: false, choices: ["machine", "user", "all"], help: "if not filled, use 'package.json'.build.nsis.perMachine value" });
-parser.addArgument("--arch", { required: false });
-const args = parser.parseArgs();
-const packageJSON = JSON.parse(readFileSync(path.join(__dirname, "./package.json")).toString());
+interface Arguments {
+	platform: "win32" | "darwin";
+	ext: "msi" | "exe" | "all";
+	dist: "machine" | "user";
+	arch?: "x64";
+}
 
-async function main() {
+/**
+ * Package an electron app from command line / package.json informations
+ * @param args Console line arguments
+ */
+export async function main(args: Arguments) {
+	const packageJSON = JSON.parse(readFileSync(path.join(__dirname, "./package.json")).toString());
+
 	const equivalentDist = new Map([["exe", 2], ["msi", 3], ["all", 6]]);
 	const create: Promise<any>[] = [];
 	let installScope: "perMachine" | "perUser";
@@ -28,7 +33,6 @@ async function main() {
 			installScope = packageJSON.build.nsis.perMachine ? "perMachine" : "perUser";
 			break;
 	}
-
 
 	if (equivalentDist.get(args.ext) as number % 2 === 0) { // exe ou all
 		create.push(createEXE({
@@ -71,7 +75,7 @@ async function main() {
 				ui: {
 					chooseDirectory: true
 				},
-				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced"
+				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced" // GUID de MesPatientsBureau ne doit pas changer pour une même application
 			},
 			true
 		));
@@ -80,4 +84,14 @@ async function main() {
 	await Promise.all(create);
 }
 
-main();
+if (require.main === module) {
+	const parser = new ArgumentParser();
+
+	parser.addArgument("--platform", { required: true, choices: ["win32", "darwin"] });
+	parser.addArgument("--ext", { required: false, choices: ["msi", "exe", "all"], defaultValue: "all" });
+	parser.addArgument("--dist", { required: false, choices: ["machine", "user"], help: "if not filled, use 'package.json'.build.nsis.perMachine value" });
+	parser.addArgument("--arch", { required: false });
+
+	main(parser.parseArgs());
+
+}
