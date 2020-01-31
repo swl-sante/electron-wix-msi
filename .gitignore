@@ -1,10 +1,12 @@
 node_modules
 lib
 coverage
-harness/**/*
-harness/*
-!harness/harness.ts
-!harness/README.md
-!harness/all.ps1
+harness/building
+harness/build
+harness/app
+harness/msi
+harness/exe
+harness/temp
+harness/package.json
 
 .DS_Store
