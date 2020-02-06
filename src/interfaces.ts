@@ -33,3 +33,13 @@ export interface File {
   name: string;
   path: string;
 }
+
+export interface EnvironmentVar {
+  id: string;
+  name: string;
+  value: string;
+  permanent: boolean;
+  part: "all" | "last" | "first";
+  action: "set" | "create" | "remove";
+  system: boolean;
+}

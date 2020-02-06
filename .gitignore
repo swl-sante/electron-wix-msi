@@ -10,3 +10,6 @@ harness/temp
 harness/package.json
 
 .DS_Store
+
+.vs
+*.log

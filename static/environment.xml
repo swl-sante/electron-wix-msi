@@ -1,0 +1,1 @@
+<Environment Id="{{Id}}" Name="{{Name}}" Value="{{Value}}" Permanent="{{Permanent}}" Part="{{Part}}" Action="{{Action}}" System="{{System}}" />
