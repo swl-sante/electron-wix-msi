@@ -1,4 +1,3 @@
-import * as builder from "electron-builder";
 import * as packager from "electron-packager";
 import { promises } from "fs";
 import * as path from "path";
@@ -54,16 +53,8 @@ export async function createMSI(packagerOptions: packager.Options | string, msiO
  * Create .exe installer from source
  * @param config options for the electron builder
  */
-export async function createEXE(config: builder.CliOptions) {
+export async function createEXE() {
 	return new Promise((resolve) => {
-		const now = Date.now();
-		console.log(ConsoleColor.FgGreen + "Starting the creation of EXE setup at " + new Date().toString() + ConsoleColor.Reset);
-		const promise = builder.build({
-			...config,
-		});
-		promise.then((e) => {
-			console.log(`${ConsoleColor.FgGreen}EXE setup is available at ${e[0]} (${(Date.now() - now) / 1000}s)${ConsoleColor.Reset}`);
-			resolve(e);
-		});
+		throw new Error("Not implemented yet");
 	});
 }

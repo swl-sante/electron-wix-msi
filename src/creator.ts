@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import { flatMap, padStart } from "lodash";
 import * as path from "path";
-import * as uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import { spawnPromise } from "./utils/spawn";
 
 import { readFileSync } from "fs-extra";

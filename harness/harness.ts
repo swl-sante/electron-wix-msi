@@ -35,18 +35,7 @@ export async function main(args: Arguments) {
 	}
 
 	if (equivalentDist.get(args.ext) as number % 2 === 0) { // exe ou all
-		create.push(createEXE({
-			config: {
-				...packageJSON.build,
-				directories: {
-					...packageJSON.build.directories,
-					output: path.join("exe")
-				}
-			},
-			arch: args.arch,
-			platform: args.platform,
-
-		}));
+		create.push(createEXE());
 	}
 
 	if (equivalentDist.get(args.ext) as number % 3 === 0) { // msi ou all
