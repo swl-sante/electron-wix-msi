@@ -20,7 +20,7 @@ export async function main(args: Arguments) {
 
 	const equivalentDist = new Map([["exe", 2], ["msi", 3], ["all", 6]]);
 	const create: Promise<any>[] = [];
-	let installScope: "perMachine" | "perUser";
+	let installScope: "perMachine" | "perUser" | undefined;
 
 	switch (args.dist) {
 		case "machine":
@@ -42,7 +42,6 @@ export async function main(args: Arguments) {
 					...packageJSON.build.directories,
 					output: path.join("exe")
 				}
-
 			},
 			arch: args.arch,
 			platform: args.platform,
@@ -70,11 +69,10 @@ export async function main(args: Arguments) {
 				manufacturer: packageJSON.author,
 				outputDirectory: path.join("msi"),
 				version: packageJSON.version,
-				installScope,
-				ui: {
-					chooseDirectory: true
-				},
-				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced" // GUID de MesPatientsBureau ne doit pas changer pour une même application
+				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced", // GUID de MesPatientsBureau ne doit pas changer pour une même application
+				customXml: [path.join(__dirname, "wix", "custom.xml")], // todo split .wxs files
+				customUiXml: [path.join(__dirname, "wix", "customUI.xml")], // todo split ui .wxs files
+				ui: true
 			},
 			true
 		));

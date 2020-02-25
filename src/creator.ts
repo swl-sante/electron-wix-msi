@@ -351,22 +351,21 @@ export class MSICreator {
 	 */
 	private getUI(): string {
 		let xml = "";
+		const uiTemplate = this.uiTemplate;
 
-		if (this.ui) {
-			xml = this.uiTemplate;
-		}
+		xml = this.uiTemplate;
 
-		if (typeof this.ui === "object" && this.ui !== "null") {
-			const { images, template, chooseDirectory } = this.ui;
-			const propertiesXml = this.getUIProperties(this.ui);
-			// const uiTemplate = template || (chooseDirectory ? this.uiDirTemplate : this.uiTemplate);
-			const uiTemplate = this.uiTemplate;
+		xml = replaceInString(uiTemplate, {
+			"<!-- {{CustomUI}} -->": this.getCustomUiXml(),
+		});
+		// if (typeof this.ui === "object" && this.ui !== "null") {
+		// 	const propertiesXml = this.getUIProperties(this.ui);
 
-			xml = replaceInString(uiTemplate, {
-				"<!-- {{Properties}} -->": propertiesXml,
-				"<!-- {{CustomUI}} -->": this.getCustomUiXml(),
-			});
-		}
+		// 	xml = replaceInString(uiTemplate, {
+		// 		"<!-- {{Properties}} -->": propertiesXml,
+		// 		"<!-- {{CustomUI}} -->": this.getCustomUiXml(),
+		// 	});
+		// }
 
 		return xml;
 	}
