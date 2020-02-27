@@ -30,12 +30,12 @@
 
 
 
-    
-     <!-- Env Variables-->
+
+    <!-- Env Variables-->
     <Component Id="EnvironmentVars" Guid="{{EnvironmentVarsGuid}}" Win64="{{Win64YesNo}}" Directory="TARGETDIR">
       <!-- {{Envs}} -->
     </Component>
-    
+
 
     <!-- {{UI}} -->
 
@@ -51,12 +51,13 @@
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="{{ShortcutFolderName}}"/>
       </Directory>
-
+      <Directory Id="StartupFolder">
+      </Directory>
     </Directory>
 
 
     <!-- {{Custom}} -->
-  
+
     <!-- Step 3: Add app to Start Menu -->
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="{{ApplicationShortcutGuid}}" Win64='{{Win64YesNo}}'>
@@ -74,12 +75,10 @@
     <Feature Id="MainApplication" Title="Main Application" Level="1">
       <!-- {{ComponentRefs}} -->
       <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="StartupApplicationShortcut" />
       <ComponentRef Id="EnvironmentVars" />
 
     </Feature>
-
-
-
 
   </Product>
 </Wix>

@@ -61,3 +61,12 @@
         shell.Environment("SYSTEM")("REPERTOIREMONSISRA") = Session.Property("PrefPath")
       ]]>
 </CustomAction>
+
+<!-- Permet de lancement automatique au démarrage de l'utilisateur -->
+<DirectoryRef Id="StartupFolder">
+  <Component Id="StartupApplicationShortcut" Guid="4512420b-30cb-4e68-8679-d36c87145bec">
+    <Shortcut Id="AutoStartApplicationStartMenuShortcut" Name="{{ApplicationBinary}}" Target="[APPLICATIONROOTDIRECTORY]{{ApplicationBinary}}" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+    <!--<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>-->
+    <RegistryValue Root="HKCU" Key="Software\GCS SARA\Virtual Printer Bridge" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+  </Component>
+</DirectoryRef>
