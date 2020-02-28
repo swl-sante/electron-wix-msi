@@ -59,8 +59,8 @@ export async function main(args: Arguments) {
 				outputDirectory: path.join("msi"),
 				version: packageJSON.version,
 				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced", // GUID de MesPatientsBureau ne doit pas changer pour une même application
-				customXml: [path.join(__dirname, "wix", "custom.xml")], // todo split .wxs files
-				customUiXml: [path.join(__dirname, "wix", "customUI.xml")], // todo split ui .wxs files
+				customXml: [path.join(__dirname, "wix", "custom.xml")],
+				customUiXml: [path.join(__dirname, "wix", "customUI.xml")],
 				ui: true
 			},
 			true

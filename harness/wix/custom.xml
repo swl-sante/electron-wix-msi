@@ -24,11 +24,11 @@
 
 <?else?>
 
-<SetProperty Sequence="first" Before="CostInitialize" Action="SetPrefPathMachine" Id="PrefPath" Value="$(env.USERPROFILE)\AppData\Local\MonSisra2">
+<SetProperty Sequence="first" Before="CostInitialize" Action="SetPrefPathMachine" Id="PrefPath" Value="%USERPROFILE%\AppData\Local\MonSisra2">
   <![CDATA[ALLUSERS=1]]>
 </SetProperty>
 
-<SetProperty Sequence="first" Before="CostInitialize" Action="SetPrefPathUser" Id="PrefPath" Value="[LocalAppDataFolder]Programs\monsisraap">
+<SetProperty Sequence="first" Before="CostInitialize" Action="SetPrefPathUser" Id="PrefPath" Value="%LOCALAPPDATA%\MonSisra2 ">
   <![CDATA[ALLUSERS<>1]]>
 </SetProperty>
 
