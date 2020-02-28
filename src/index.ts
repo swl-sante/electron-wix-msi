@@ -22,7 +22,7 @@ export async function createMSI(packagerOptions: packager.Options | string, msiO
 		await packager({ ...packagerOptions, quiet: true });
 
 		packageTime = Date.now();
-		console.log(ConsoleColor.FgCyan + "Packaging done in " + ((packageTime - start) / 1000) + "s");
+		console.log(ConsoleColor.FgCyan + "Packaging done in " + ((packageTime - start) / 1000) + "s" + ConsoleColor.Reset);
 
 		const packagedOutputFiles = await promises.readdir(msiOptions.appDirectory);
 		if (packagedOutputFiles.length === 1) {

@@ -18,7 +18,9 @@
 		<Publish Event="DoAction" Value="ChangePrefEnvVar">1</Publish>
 	</Control>
 
-	<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+
+
+  <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
 		<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
 	</Control>
 	<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
@@ -26,9 +28,15 @@
 	<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
 
 	<!-- Checkbox pour choisir le mode d'installation (pour un utilisateur ou pour tous les utilisateurs) -->
-	<Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="10" Y="130" Width="200" Height="20" Property="ALLUSERS" Text="Installer pour tous les utilisateurs" CheckBoxValue="1">
+	<Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="10" Y="160" Width="200" Height="20" Property="ALLUSERS" Text="Installer pour tous les utilisateurs" CheckBoxValue="1">
 		<Publish Event="DoAction" Value="SetDefaultPathFromCheckbox">1</Publish>
 	</Control>
+
+
+  <!--<Control Id="CGU" Type="Hyperlink" X="10" Y="130" Width="200" Height="20">
+    <Text><![CDATA[<a href="https://www.sante-ra.fr/AutoConnectSSO/Content/StaticPages/charte-ra.html">Condition générales d'utilisations</a>]]></Text>
+  </Control>-->
+
 
 </Dialog>
 
