@@ -32,7 +32,6 @@ export async function createMSI(packagerOptions: packager.Options | string, msiO
 	} else {
 		msiOptions = { ...msiOptions, appDirectory: packagerOptions };
 	}
-
 	msiOptions.outputDirectory = path.resolve(msiOptions.outputDirectory);
 	msiOptions.appDirectory = path.resolve(msiOptions.appDirectory);
 
@@ -46,7 +45,7 @@ export async function createMSI(packagerOptions: packager.Options | string, msiO
 		await promises.rmdir(packagerOptions.out as string, { recursive: true });
 	}
 
-	console.log(ConsoleColor.FgCyan + "Total " + ((Date.now() - start) / 1000) + "ms");
+	console.log(ConsoleColor.FgCyan + "Total " + ((Date.now() - start) / 1000) + "ms" + ConsoleColor.Reset);
 }
 
 /**

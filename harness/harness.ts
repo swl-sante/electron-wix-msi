@@ -40,6 +40,8 @@ export async function main(args: Arguments) {
 
 	if (equivalentDist.get(args.ext) as number % 3 === 0) { // msi ou all
 		const tempFolder = path.join("temp");
+		const ressourcesFolder = path.join(__dirname, "wix", "ressources")
+		console.log(ressourcesFolder);
 		create.push(createMSI(
 			{
 				asar: packageJSON.build.asar,
@@ -61,6 +63,7 @@ export async function main(args: Arguments) {
 				upgradeCode: "dcad351e-ff1b-44da-bad7-4f0c54edcced", // GUID de MesPatientsBureau ne doit pas changer pour une même application
 				customXml: [path.join(__dirname, "wix", "custom.xml")],
 				customUiXml: [path.join(__dirname, "wix", "customUI.xml")],
+				ressourcesFolder: ressourcesFolder,
 				ui: true
 			},
 			true
@@ -75,7 +78,7 @@ if (require.main === module) {
 
 	parser.addArgument("--platform", { required: true, choices: ["win32", "darwin"] });
 	parser.addArgument("--ext", { required: false, choices: ["msi", "exe", "all"], defaultValue: "all" });
-	parser.addArgument("--dist", { required: false, choices: ["machine", "user"], help: "if not filled, use 'package.json'.build.nsis.perMachine value" });
+	parser.addArgument("--dist", { required: false, choices: ["machine", "user"], help: "if not filled, uses 'package.json'.build.nsis.perMachine value" });
 	parser.addArgument("--arch", { required: false });
 
 	main(parser.parseArgs());

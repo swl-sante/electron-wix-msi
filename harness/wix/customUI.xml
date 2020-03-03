@@ -4,6 +4,7 @@
 
 <DialogRef Id="ProgressDlg" />
 
+<Binary Id="LogoSara" SourceFile="{{RessourcesFolder}}/logo.png" />
 
 <!-- CUSTOM DIALOG -->
 <!-- Options dialogue : installation multi-user ? -->

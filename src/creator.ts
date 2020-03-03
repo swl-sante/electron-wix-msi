@@ -43,6 +43,7 @@ export interface MSICreatorOptions {
 	envs?: EnvironmentVar[];
 	customXml?: string | string[]; // path of custom .wix files
 	customUiXml?: string | string[];
+	ressourcesFolder?: string
 }
 
 export interface UIOptions {
@@ -100,6 +101,7 @@ export class MSICreator {
 	public envs?: EnvironmentVar[];
 	public customRootXml?: string[];
 	public customUiXml?: string[];
+	public ressourcesFolder: string
 
 	private files: Array<string> = [];
 	private directories: Array<string> = [];
@@ -133,6 +135,7 @@ export class MSICreator {
 		this.customRootXml = typeof options.customXml === "string" ? [options.customXml] : options.customXml;
 		this.customUiXml = typeof options.customUiXml === "string" ? [options.customUiXml] : options.customUiXml;
 		this.ui = options.ui !== undefined ? options.ui : false;
+		this.ressourcesFolder = options.ressourcesFolder ?? process.cwd();
 	}
 
 	/**
@@ -180,7 +183,6 @@ export class MSICreator {
 		}
 
 		const { wixobjFile } = await this.createWixobj();
-		fs.copy(resourcesFolder, path.join(process.cwd(), "msi", "ressources"));
 		const { msiFile } = await this.createMsi();
 		await this.signMSI(msiFile);
 
@@ -232,6 +234,7 @@ export class MSICreator {
 			"{{Win64YesNo}}": this.arch === "x86" ? "no" : "yes",
 			"{{InstallScope}}": this.installScope,
 			"{{EnvironmentVarsGuid}}": uuid(),
+			"{{RessourcesFolder}}": this.ressourcesFolder
 		};
 
 		const completeTemplate = replaceInString(this.wixTemplate, scaffoldReplacements);

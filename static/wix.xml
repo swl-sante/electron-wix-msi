@@ -6,9 +6,9 @@
       <![CDATA[Installed OR (VersionNT >= 601)]]>
     </Condition> -->
     <!-- http://wixtoolset.org/documentation/manual/v3/xsd/wix/package.html -->
-    <Package InstallerVersion="405" Compressed="yes" InstallScope="perMachine" Comments="Windows Installer Package" Platform="{{Platform}}" InstallPrivileges="elevated"/>
+    <Package InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine" Comments="Windows Installer Package" Platform="{{Platform}}" />
 
-    <!-- Overides the defautl install mode. It solves a problem where
+    <!-- Overides the default install mode. It solves a problem where
     individual packaged files that have the same version as in pervious
     installed App version will be deleted if the files a re in use during
     this upgrade. Unfortunately this causes an ICE 40 warning during linking. -->
@@ -39,7 +39,6 @@
 
     <!-- {{UI}} -->
 
-    <Binary Id="LogoSara" SourceFile="ressources/logo.png" />
 
     <!-- Step 2: Add files and directories -->
     <Directory Id="TARGETDIR" Name="SourceDir">
