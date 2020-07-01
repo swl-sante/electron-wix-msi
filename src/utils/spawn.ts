@@ -1,6 +1,6 @@
-import { SpawnOptions } from 'child_process';
+import { SpawnOptions } from "child_process";
 
-const debug = require('debug')('electron-wix-msi');
+const debug = require("debug")("electron-wix-msi");
 
 export interface SpawnPromiseResult {
   stdout: string;
@@ -17,28 +17,28 @@ export interface SpawnPromiseResult {
  * @returns {Promise<SpawnPromiseResult>}
  */
 export function spawnPromise(name: string,
-                             args: Array<string>,
-                             options?: SpawnOptions): Promise<SpawnPromiseResult> {
+  args?: Array<string>,
+  options?: SpawnOptions): Promise<SpawnPromiseResult> {
   return new Promise((resolve) => {
-    const { spawn } = require('child_process');
+    const { spawn } = require("child_process");
     const fork = spawn(name, args, options);
 
     debug(`Spawning ${name} with ${args}`);
 
-    let stdout = '';
-    let stderr = '';
+    let stdout = "";
+    let stderr = "";
 
-    fork.stdout.on('data', (data: any) => {
+    fork.stdout.on("data", (data: any) => {
       debug(`Spawn ${name} stdout: ${data}`);
       stdout += data;
     });
 
-    fork.stderr.on('data', (data: any) => {
+    fork.stderr.on("data", (data: any) => {
       debug(`Spawn ${name} stderr: ${data}`);
       stderr += data;
     });
 
-    fork.on('close', (code: number) => {
+    fork.on("close", (code: number) => {
       debug(`Spawn ${name}: Child process exited with code ${code}`);
       resolve({ stdout, stderr, code });
     });

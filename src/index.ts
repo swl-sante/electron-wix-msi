@@ -11,27 +11,22 @@ export * from "./creator";
  * @param msiOptions options for the electron-wix-msi installer
  * @param clean if process has to clean temp directories
  */
-export async function createMSI(packagerOptions: packager.Options | string, msiOptions: MSICreatorOptions, clean: boolean = true) {
+export async function createMSI(packagerOptions: packager.Options, msiOptions: MSICreatorOptions, clean: boolean = true) {
 	const start = Date.now();
 	let packageTime = 0;
 	console.log(ConsoleColor.FgCyan + "Starting the creation of MSI setup at " + new Date().toString() + ConsoleColor.Reset);
 
-	if (typeof packagerOptions !== "string") {
+	packagerOptions.dir = path.resolve(packagerOptions.dir);
+	await packager({ ...packagerOptions, quiet: true });
 
-		packagerOptions.dir = path.resolve(packagerOptions.dir);
-		await packager({ ...packagerOptions, quiet: true });
+	packageTime = Date.now();
+	console.log(ConsoleColor.FgCyan + "Packaging done in " + (packageTime - start) / 1000 + "s" + ConsoleColor.Reset);
 
-		packageTime = Date.now();
-		console.log(ConsoleColor.FgCyan + "Packaging done in " + ((packageTime - start) / 1000) + "s" + ConsoleColor.Reset);
-
-		const packagedOutputFiles = await promises.readdir(msiOptions.appDirectory);
-		if (packagedOutputFiles.length === 1) {
-			msiOptions.appDirectory = path.join(msiOptions.appDirectory, packagedOutputFiles[0]);
-		}
-
-	} else {
-		msiOptions = { ...msiOptions, appDirectory: packagerOptions };
+	const packagedOutputFiles = await promises.readdir(msiOptions.appDirectory);
+	if (packagedOutputFiles.length === 1) {
+		msiOptions.appDirectory = path.join(msiOptions.appDirectory, packagedOutputFiles[0]);
 	}
+
 	msiOptions.outputDirectory = path.resolve(msiOptions.outputDirectory);
 	msiOptions.appDirectory = path.resolve(msiOptions.appDirectory);
 
@@ -39,13 +34,13 @@ export async function createMSI(packagerOptions: packager.Options | string, msiO
 	await msiCreator.create();
 	await msiCreator.compile();
 
-	console.log(ConsoleColor.FgCyan + "The .msi creation has been done in " + ((Date.now() - packageTime) / 1000) + "ms" + ConsoleColor.Reset);
+	console.log(ConsoleColor.FgCyan + "The .msi creation has been done in " + (Date.now() - packageTime) / 1000 + "ms" + ConsoleColor.Reset);
 
-	if (typeof packagerOptions !== "string" && clean) {
+	if (clean) {
 		await promises.rmdir(packagerOptions.out as string, { recursive: true });
 	}
 
-	console.log(ConsoleColor.FgCyan + "Total " + ((Date.now() - start) / 1000) + "ms" + ConsoleColor.Reset);
+	console.log(ConsoleColor.FgCyan + "Total " + (Date.now() - start) / 1000 + "ms" + ConsoleColor.Reset);
 }
 
 /**
