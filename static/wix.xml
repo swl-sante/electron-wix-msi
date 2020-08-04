@@ -4,7 +4,7 @@
     <!-- Only run this installer on Windows 7 or up (or if it's already installed, I guess) -->
     <!-- <Condition Message="This application is only supported on Windows 7 or higher.">
       <![CDATA[Installed OR (VersionNT >= 601)]]>
-    </Condition> -->
+</Condition> -->
     <!-- http://wixtoolset.org/documentation/manual/v3/xsd/wix/package.html -->
     <Package InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine" Comments="Windows Installer Package" Platform="{{Platform}}" />
 
@@ -15,7 +15,6 @@
     <Property Id="REINSTALLMODE" Value="emus" />
     <!-- Overrides the default reboot behavior if files are in use during the upgrade.
      This way no unpxecpted reboot will happpen.-->
-    <Property Id="REBOOT" Value="ReallySuppress" />
 
     <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
 
