@@ -43,7 +43,8 @@ export interface MSICreatorOptions {
 	envs?: EnvironmentVar[];
 	customXml?: string | string[]; // path of custom .wix files
 	customUiXml?: string | string[];
-	ressourcesFolder?: string
+	ressourcesFolder?: string;
+	installPrivileges: "limited" | "elevated"  
 }
 
 export interface UIOptions {
@@ -96,6 +97,7 @@ export class MSICreator {
 	public signWithParams?: string;
 	public arch: "x64" | "ia64" | "x86" = "x86";
 	public installScope: "perMachine" | "perUser";
+	public installPrivileges: MSICreatorOptions["installPrivileges"];
 	public ui: UIOptions | boolean;
 	public noConsole?: boolean;
 	public envs?: EnvironmentVar[];
@@ -128,6 +130,7 @@ export class MSICreator {
 		this.version = options.version;
 		this.arch = options.arch || "x86";
 		this.installScope = options.installScope ?? "perMachine";
+		this.installPrivileges = options.installPrivileges ?? "elevated"
 		this.exe = options?.exe?.replace(/\.exe$/, "") ?? `${this.name}`;
 		this.noConsole = options.noConsole;
 		this.appUserModelId = options.appUserModelId || `com.squirrel.${this.shortName}.${this.exe}`;
@@ -234,7 +237,8 @@ export class MSICreator {
 			"{{Win64YesNo}}": this.arch === "x86" ? "no" : "yes",
 			"{{InstallScope}}": this.installScope,
 			"{{EnvironmentVarsGuid}}": uuid(),
-			"{{RessourcesFolder}}": this.ressourcesFolder
+			"{{RessourcesFolder}}": this.ressourcesFolder,
+			"{{InstallPrivileges}}": this.installPrivileges,
 		};
 
 		const completeTemplate = replaceInString(this.wixTemplate, scaffoldReplacements);

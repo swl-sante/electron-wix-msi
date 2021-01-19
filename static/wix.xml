@@ -6,7 +6,7 @@
       <![CDATA[Installed OR (VersionNT >= 601)]]>
 </Condition> -->
     <!-- http://wixtoolset.org/documentation/manual/v3/xsd/wix/package.html -->
-    <Package InstallerVersion="405" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine" Comments="Windows Installer Package" Platform="{{Platform}}" />
+    <Package InstallerVersion="405" Compressed="yes" InstallPrivileges="{{InstallPrivileges}}" InstallScope="{{InstallScope}}" Comments="Windows Installer Package" Platform="{{Platform}}" />
 
     <!-- Overides the default install mode. It solves a problem where
     individual packaged files that have the same version as in pervious
