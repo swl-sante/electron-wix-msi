@@ -13,6 +13,7 @@
     installed App version will be deleted if the files a re in use during
     this upgrade. Unfortunately this causes an ICE 40 warning during linking. -->
     <Property Id="REINSTALLMODE" Value="emus" />
+    <Property Id="ENVIRONMENT_MSB" Value="{{Environment}}" />
     <!-- Overrides the default reboot behavior if files are in use during the upgrade.
      This way no unpxecpted reboot will happpen.-->
 

@@ -17,6 +17,7 @@ const ROOTDIR_NAME = "APPLICATIONROOTDIRECTORY";
 const debug = require("debug")("electron-wix-msi");
 
 export interface MSICreatorOptions {
+	environment: string;
 	appDirectory: string;
 	appUserModelId?: string;
 	description: string;
@@ -109,6 +110,7 @@ export class MSICreator {
 	private directories: Array<string> = [];
 	private tree: FileFolderTree | undefined;
 	private components: Array<Component> = [];
+	private environment: string;
 
 	constructor(options: MSICreatorOptions) {
 		this.appDirectory = path.normalize(options.appDirectory);
@@ -139,6 +141,7 @@ export class MSICreator {
 		this.customUiXml = typeof options.customUiXml === "string" ? [options.customUiXml] : options.customUiXml;
 		this.ui = options.ui !== undefined ? options.ui : false;
 		this.ressourcesFolder = options.ressourcesFolder ?? process.cwd();
+		this.environment = options.environment;
 	}
 
 	/**
@@ -239,6 +242,7 @@ export class MSICreator {
 			"{{EnvironmentVarsGuid}}": uuid(),
 			"{{RessourcesFolder}}": this.ressourcesFolder,
 			"{{InstallPrivileges}}": this.installPrivileges,
+			"{{Environment}}": this.environment,
 		};
 
 		const completeTemplate = replaceInString(this.wixTemplate, scaffoldReplacements);
