@@ -51,6 +51,8 @@
       </Directory>
       <Directory Id="StartupFolder">
       </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop">
+      </Directory>
     </Directory>
 
 
