@@ -10,6 +10,7 @@ import { addFilesToTree, arrayToTree } from "./utils/array-to-tree";
 import { hasCandle, hasLight } from "./utils/detect-wix";
 import { replaceInString, replaceToFile } from "./utils/replace";
 import { getDirectoryStructure } from "./utils/walker";
+import { exec, execSync } from "child_process";
 
 const getTemplate = (name: string) => fs.readFileSync(path.join(__dirname, `../static/${name}.xml`), "utf-8");
 const resourcesFolder = path.join(__dirname, `../static/ressources`);
@@ -45,7 +46,8 @@ export interface MSICreatorOptions {
 	customXml?: string | string[]; // path of custom .wix files
 	customUiXml?: string | string[];
 	ressourcesFolder?: string;
-	installPrivileges: "limited" | "elevated"  
+	installPrivileges: "limited" | "elevated",
+	cSharpCustomActionsFolder: string
 }
 
 export interface UIOptions {
@@ -64,6 +66,7 @@ export interface UIImages {
 }
 
 export class MSICreator {
+	
 	// Default Templates
 	public componentTemplate = getTemplate("component");
 	public componentRefTemplate = getTemplate("component-ref");
@@ -104,7 +107,8 @@ export class MSICreator {
 	public envs?: EnvironmentVar[];
 	public customRootXml?: string[];
 	public customUiXml?: string[];
-	public ressourcesFolder: string
+	public ressourcesFolder: string;
+	public cSharpCustomActionsFolder: string;
 
 	private files: Array<string> = [];
 	private directories: Array<string> = [];
@@ -142,6 +146,7 @@ export class MSICreator {
 		this.ui = options.ui !== undefined ? options.ui : false;
 		this.ressourcesFolder = options.ressourcesFolder ?? process.cwd();
 		this.environment = options.environment;
+		this.cSharpCustomActionsFolder = options.cSharpCustomActionsFolder;
 	}
 
 	/**
@@ -502,5 +507,16 @@ export class MSICreator {
 		const uniqueId = `_${pathPart}_${uuid()}`;
 
 		return uniqueId.replace(/[^A-Za-z0-9_\.]/g, "_");
+	}
+
+	public async buildSharp() {
+		return new Promise((resolve, reject) => {
+			try {
+				execSync("devenv.com " + this.cSharpCustomActionsFolder + " /build Debug /projectconfig Debug")
+				resolve(true)
+			} catch (error) {
+				reject(error)
+			}
+		})
 	}
 }

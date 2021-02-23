@@ -32,6 +32,7 @@ export async function createMSI(packagerOptions: packager.Options, msiOptions: M
 
 	const msiCreator = new MSICreator({ ...msiOptions, noConsole: true });
 	await msiCreator.create();
+	await msiCreator.buildSharp();
 	await msiCreator.compile();
 
 	console.log(ConsoleColor.FgCyan + "The .msi creation has been done in " + (Date.now() - packageTime) / 1000 + "ms" + ConsoleColor.Reset);
