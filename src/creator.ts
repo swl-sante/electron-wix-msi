@@ -512,7 +512,7 @@ export class MSICreator {
 	public async buildSharp() {
 		return new Promise((resolve, reject) => {
 			try {
-				execSync("devenv.com " + this.cSharpCustomActionsFolder + " /build Debug /projectconfig Debug")
+				execSync("devenv.com " + this.cSharpCustomActionsFolder + " /build Debug")
 				resolve(true)
 			} catch (error) {
 				reject(error)
