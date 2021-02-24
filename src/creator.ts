@@ -47,7 +47,8 @@ export interface MSICreatorOptions {
 	customUiXml?: string | string[];
 	ressourcesFolder?: string;
 	installPrivileges: "limited" | "elevated",
-	cSharpCustomActionsFolder: string
+	cSharpCustomActionsFolder: string,
+	customActionsDllPath: string
 }
 
 export interface UIOptions {
@@ -115,6 +116,7 @@ export class MSICreator {
 	private tree: FileFolderTree | undefined;
 	private components: Array<Component> = [];
 	private environment: string;
+	private customActionsDllPath: string;
 
 	constructor(options: MSICreatorOptions) {
 		this.appDirectory = path.normalize(options.appDirectory);
@@ -147,6 +149,7 @@ export class MSICreator {
 		this.ressourcesFolder = options.ressourcesFolder ?? process.cwd();
 		this.environment = options.environment;
 		this.cSharpCustomActionsFolder = options.cSharpCustomActionsFolder;
+		this.customActionsDllPath = options.customActionsDllPath;
 	}
 
 	/**
@@ -248,6 +251,7 @@ export class MSICreator {
 			"{{RessourcesFolder}}": this.ressourcesFolder,
 			"{{InstallPrivileges}}": this.installPrivileges,
 			"{{Environment}}": this.environment,
+			"{{CustomActionsPath}}": this.customActionsDllPath
 		};
 
 		const completeTemplate = replaceInString(this.wixTemplate, scaffoldReplacements);
