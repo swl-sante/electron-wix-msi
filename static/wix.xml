@@ -1,3 +1,5 @@
+<?define CUSTOMACTIONSPATH = "{{CustomActionsPath}}"?>
+
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- http://wixtoolset.org/documentation/manual/v3/xsd/wix/product.html -->
   <Product Id="*" UpgradeCode="{{UpgradeCode}}" Name="{{ApplicationName}}" Version="{{Version}}" Manufacturer="{{Manufacturer}}" Language="{{Language}}">
@@ -14,7 +16,6 @@
     this upgrade. Unfortunately this causes an ICE 40 warning during linking. -->
     <Property Id="REINSTALLMODE" Value="emus" />
     <Property Id="ENVIRONMENT_MSB" Value="{{Environment}}" />
-    <Property Id="CSharpCustomActionsPath" Value="{{CustomActionsPath}}" />
     <!-- Overrides the default reboot behavior if files are in use during the upgrade.
      This way no unpxecpted reboot will happpen.-->
 
